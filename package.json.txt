@@ -1,9 +1,9 @@
 {
-  "name": "com.Stefaaan06.unityeditorphysicssimulation
+  "name": "com.stefaaan06.UnityEditorPhysicsSimulation
   "version": "1.0.0",
   "displayName": "Unity Editor Physics Simulation",
   "description": "Allows you to simulate physics inside the unity editor. Supports unity´s undo System & + Full documentation",
-  "unity": "2022.3.5f1",
+  "unity": "2018.3",
   
   "keywords": [
       "unity",
@@ -19,7 +19,6 @@
     
   "author": {
     "name": "Stefaaan06",
-    "email": "stefaaan06@icloud.com",
     "url": "https://stefaaan06..com"
   }
 }
