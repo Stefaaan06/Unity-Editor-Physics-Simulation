@@ -1,10 +1,22 @@
 {
-  "name": "com.Stefaaan06.Unity-Editor-Physics-Simulation",
+  "name": "com.Stefaaan06.unityeditorphysicssimulation
   "version": "1.0.0",
   "displayName": "Unity Editor Physics Simulation",
   "description": "Allows you to simulate physics inside the unity editor. Supports unity´s undo System & + Full documentation",
   "unity": "2022.3.5f1",
+  
+  "keywords": [
+      "unity",
+      "editor",
+      "physics",
+      "simulation",
+      "undo",
+      "system",
+      "documentation"
+  ],
 
+  "category": "Open-Source"
+    
   "author": {
     "name": "Stefaaan06",
     "email": "stefaaan06@icloud.com",
