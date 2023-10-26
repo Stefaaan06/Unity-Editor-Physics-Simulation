@@ -1,5 +1,5 @@
 {
-  "name": "com.stefaaan06.UnityEditorPhysicsSimulation",
+  "name": "com.stefaaan06.unity_editor_physics_simulation",
   "version": "1.0.0",
   "displayName": "Unity Editor Physics Simulation",
   "description": "Allows you to simulate physics inside the unity editor. Supports unity´s undo System & + Full documentation",
