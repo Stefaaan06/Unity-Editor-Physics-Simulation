@@ -32,7 +32,7 @@ To use the Scene Physics Tool in your Unity project, follow these steps:
     Press your undo shortcut, or go into the Unity undo menu to undo any unwanted simulations
 
 # Creator
-[Stefaaan06](https://twitter.com/Stefaaan06)https://twitter.com/Stefaaan06 - Creator and maintainer
+[Stefaaan06](https://twitter.com/Stefaaan06) - Creator and maintainer
 
 [Wishlist my game on steam](https://store.steampowered.com/app/2547010/Mik/)
 
