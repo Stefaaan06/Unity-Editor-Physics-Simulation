@@ -2,8 +2,9 @@
 
 Scene Physics Tool is a simple Unity Editor Extension that enables you to simulate physics within the Unity Scene View. This tool is especially useful for level design and previewing physics interactions within your scenes. It provides an easy way to run physics simulations for selected GameObjects and their child objects.
 # Features
-    Simulate physics interactions in the Unity Scene View.
+    Simulate accurate physics interactions in the Unity Scene View.
     Control the duration of the physics simulation.
+    Control the mass of the physics simulation.
     Optionally run physics simulations for child GameObjects.
     Full documentation
 
