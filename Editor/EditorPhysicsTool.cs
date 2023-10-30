@@ -11,7 +11,7 @@ using UnityEngine;
 /// | Backend code to simulate physics in the scene view.
 /// </summary>
 /// <author>Stefaaan06</author>
-/// <version>1.1.0</version>
+/// <version>1.2.0</version>
 
 public class ScenePhysicsTool : MonoBehaviour
 {
