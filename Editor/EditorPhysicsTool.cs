@@ -124,7 +124,7 @@ public class ScenePhysicsTool : MonoBehaviour
     /// <param name="rememberCollisionDetection">remembered collision detection values</param>
     /// <param name="runForChildren">determines if it should run for children</param>
     /// <param name="rbs">All rigidbodies in the scene</param>
-    /// <returns></returns>
+    /// <returns>waits for end of frame in loop</returns>
     IEnumerator simulatePhysics(float time, bool[] rememberRigidbodiesBool, float[] rememberRigidbodyMass, CollisionDetectionMode[] rememberCollisionDetection, bool runForChildren, Rigidbody[] rbs)
     {
         Rigidbody rb;
