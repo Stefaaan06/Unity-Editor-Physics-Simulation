@@ -5,6 +5,7 @@ using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// Simple Editor Extension that allows you to simulate physics in the scene view.
@@ -15,7 +16,9 @@ using UnityEngine;
 
 public class ScenePhysicsTool : MonoBehaviour
 {
-    private float _simulationWeight;
+    [SerializeField] private float simulationWeight = 1f;
+    [SerializeField] private float simulationTime = 10f;
+    [SerializeField] private bool runForChildren = false;
     
     /// <summary>
     /// Simulates physics for a specified duration.
@@ -23,7 +26,7 @@ public class ScenePhysicsTool : MonoBehaviour
     /// <param name="time">The duration for which physics should be simulated in seconds.</param>
     /// <param name="runForChildren">Whether to also run physics for child objects.</param>
     /// <param name="simulationWeight">The mass the object should be simulated with</param>
-    public void SimulatePhysics(float time, bool runForChildren, float simulationWeight)
+    public void SimulatePhysics()
     {
         Rigidbody rb;
         ScenePhysicsTool scenePhysicsTool;
@@ -69,7 +72,7 @@ public class ScenePhysicsTool : MonoBehaviour
                 child.TryGetComponent<ScenePhysicsTool>(out scenePhysicsTool);
                 if (scenePhysicsTool != null)
                 {
-                    rb.mass = scenePhysicsTool.GetSimulationWeight();
+                    rb.mass = simulationWeight;
                 }
                 else
                 {
@@ -111,7 +114,7 @@ public class ScenePhysicsTool : MonoBehaviour
         
         
         //simulate physics
-        EditorCoroutineUtility.StartCoroutineOwnerless(simulatePhysics(time, rememberRigidbodiesBool, rememberRigidbodyMass, rememberCollisionDetection, runForChildren, rbs));
+        EditorCoroutineUtility.StartCoroutineOwnerless(simulatePhysics(simulationTime, rememberRigidbodiesBool, rememberRigidbodyMass, rememberCollisionDetection, runForChildren, rbs));
 
     }
 
@@ -128,16 +131,20 @@ public class ScenePhysicsTool : MonoBehaviour
     IEnumerator simulatePhysics(float time, bool[] rememberRigidbodiesBool, float[] rememberRigidbodyMass, CollisionDetectionMode[] rememberCollisionDetection, bool runForChildren, Rigidbody[] rbs)
     {
         Rigidbody rb;
+
+
+        SimulationMode previousSimulationMode = Physics.simulationMode;
         
+        Physics.simulationMode = SimulationMode.Script;
         
-        Physics.autoSimulation = false;
         //simulate physics for a specified duration
         for (; time > 0; time -= 0.01f)
         {
             Physics.Simulate(0.01f);
             yield return new WaitForEndOfFrame();
         }
-        Physics.autoSimulation = true;
+        
+        Physics.simulationMode = previousSimulationMode;
         
         //reenables Physics for all Rigidbodies
         foreach (Rigidbody rigidbody in rbs)
@@ -179,25 +186,8 @@ public class ScenePhysicsTool : MonoBehaviour
             }
         }
     }
-
-    /// <summary>
-    /// Setter method to set the simulation weight of this object.
-    /// </summary>
-    /// <param name="weight">desired weight</param>
-    public void SetSimulationWeight(float weight)
-    {
-        _simulationWeight = weight;
-    }
-    
-    /// <summary>
-    /// Getter method to get the simulation weight of this object.
-    /// </summary>
-    /// <returns>simulation weight</returns>
-    public float GetSimulationWeight()
-    {
-        return _simulationWeight;
-    }
 }
+
 
 /// <summary>
 /// Simple Editor Extension that allows you to simulate physics in the scene view.
@@ -208,20 +198,24 @@ public class ScenePhysicsTool : MonoBehaviour
 [CustomEditor(typeof(ScenePhysicsTool))]
 public class ScenePhysicsToolGUI : Editor
 {
-    //initial values
-    public float simulationTime = 10f;
-    public bool runForChildren = false;
-    public float simulationWeight = 1f;
+    //Properties
+    private SerializedProperty _simulationTime;
+    private SerializedProperty _runForChildren;
+    private SerializedProperty _simulationWeight;
 
     
-    private GUIStyle tooltipStyle;
+    private GUIStyle _tooltipStyle;
 
     private void OnEnable()
     {
         // Create a GUIStyle for tooltips
-        tooltipStyle = new GUIStyle();
-        tooltipStyle.normal.textColor = Color.white;
-        tooltipStyle.wordWrap = true;
+        _tooltipStyle = new GUIStyle();
+        _tooltipStyle.normal.textColor = Color.white;
+        _tooltipStyle.wordWrap = true;
+        
+        _simulationTime = serializedObject.FindProperty("simulationTime");
+        _simulationWeight = serializedObject.FindProperty("simulationWeight");
+        _runForChildren = serializedObject.FindProperty("runForChildren");
     }
     
     /// <summary>
@@ -232,17 +226,17 @@ public class ScenePhysicsToolGUI : Editor
         GUILayout.Label("Scene Physics Tool");
         
         //Gui elements + Labels
-        simulationTime = EditorGUILayout.FloatField(new GUIContent("Simulation Time", "The duration for which physics should be simulated."), simulationTime);
-        simulationWeight = EditorGUILayout.FloatField(new GUIContent("Simulation Weight", "The weight of this object when simulating physics."), simulationWeight);
-        runForChildren = EditorGUILayout.Toggle(new GUIContent("Run onlys for Children", "Runs only for children. If enabled, will try to find a 'ScenePhysicsTool' component on all child objects, and get the simulation weight from there. If there is no 'ScenePhysicsTool' component on a child object, will use the simulation weight from this object."), runForChildren);
+        _simulationTime.floatValue = EditorGUILayout.FloatField(new GUIContent("Simulation Time", "The duration for which physics should be simulated."), _simulationTime.floatValue);
+        _simulationWeight.floatValue = EditorGUILayout.FloatField(new GUIContent("Simulation Weight", "The weight of this object when simulating physics."), _simulationWeight.floatValue);
+        _runForChildren.boolValue = EditorGUILayout.Toggle(new GUIContent("Run onlys for Children", "Runs only for children. If enabled, will try to find a 'ScenePhysicsTool' component on all child objects, and get the simulation weight from there. If there is no 'ScenePhysicsTool' component on a child object, will use the simulation weight from this object."), _runForChildren.boolValue);
         
         ScenePhysicsTool scenePhysicsTool = (ScenePhysicsTool)target;
         if (GUILayout.Button("Run Physics"))
         {
             
-            scenePhysicsTool.SimulatePhysics(simulationTime, runForChildren, simulationWeight);
+            scenePhysicsTool.SimulatePhysics();
         }
-        
-        scenePhysicsTool.SetSimulationWeight(simulationWeight);     //update weight in ScenePhysicsTool script
+
+        serializedObject.ApplyModifiedProperties();
     }
 }
