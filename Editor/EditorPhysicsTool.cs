@@ -1,3 +1,5 @@
+#if (UNITY_EDITOR) 
+
 using System;
 using System.Collections;
 using System.Linq;
@@ -12,7 +14,7 @@ using UnityEngine.Serialization;
 /// | Backend code to simulate physics in the scene view.
 /// </summary>
 /// <author>Stefaaan06</author>
-/// <version>1.2.0</version>
+/// <version>1.2.2</version>
 
 public class ScenePhysicsTool : MonoBehaviour
 {
@@ -240,3 +242,5 @@ public class ScenePhysicsToolGUI : Editor
         serializedObject.ApplyModifiedProperties();
     }
 }
+
+#endif
