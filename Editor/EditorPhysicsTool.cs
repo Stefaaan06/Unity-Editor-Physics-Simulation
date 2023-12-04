@@ -1,13 +1,9 @@
 #if (UNITY_EDITOR) 
 
-using System;
 using System.Collections;
-using System.Linq;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 /// <summary>
 /// Simple Editor Extension that allows you to simulate physics in the scene view.
