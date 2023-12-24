@@ -15,12 +15,10 @@ To use the Scene Physics Tool in your Unity project, follow these steps:
 
 1.    
 
-    Clone or download this repository.
-    Copy the ScenePhysicsTool folder into your Unity project's Assets directory.
-2.    
-
     Open the unity package manager
     Add a new package using the projects url: https://github.com/Stefaaan06/Unity-Editor-Physics-Simulation.git
+2.    
+
     Copy the ScenePhysicsTool.cs into your project's Assets directory.
 
 # Usage
