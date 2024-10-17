@@ -7,7 +7,9 @@ using UnityEngine;
 
 /// <summary>
 /// Simple Editor Extension that allows you to simulate physics in the scene view.
-/// | Backend code to simulate physics in 
+/// | Backend code to simulate physics in the scene view.
+/// </summary>
+/// <author>Stefaaan06</author>
 /// <version>1.2.2</version>
 
 public class ScenePhysicsTool : MonoBehaviour
